@@ -9,11 +9,11 @@ import { SummaryStats } from './components/SummaryStats';
 import { AuthForms } from './components/AuthForms';
 
 function App() {
-  const [user, setUser] = useState<{username: string} | null>(null);
+  const [user, setUser] = useState<{ username: string } | null>(null);
   const [entries, setEntries] = useState<Measurement[]>([]);
   const [view, setView] = useState<'dashboard' | 'form'>('dashboard');
   const [editingEntry, setEditingEntry] = useState<Measurement | null>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [authChecking, setAuthChecking] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -49,18 +49,18 @@ function App() {
 
   const handleSave = async (data: Omit<Measurement, 'id'>) => {
     try {
-        setLoading(true);
-        if (editingEntry) {
-            await api.updateMeasurement({ ...data, id: editingEntry.id });
-        } else {
-            await api.addMeasurement(data);
-        }
-        await loadData();
-        setEditingEntry(null);
-        setView('dashboard');
-    } catch(e) {
-        setError("Fehler beim Speichern");
-        setLoading(false);
+      setLoading(true);
+      if (editingEntry) {
+        await api.updateMeasurement({ ...data, id: editingEntry.id });
+      } else {
+        await api.addMeasurement(data);
+      }
+      await loadData();
+      setEditingEntry(null);
+      setView('dashboard');
+    } catch (e) {
+      setError("Fehler beim Speichern");
+      setLoading(false);
     }
   };
 
@@ -72,14 +72,14 @@ function App() {
   const handleDelete = async () => {
     if (!editingEntry) return;
     try {
-        setLoading(true);
-        await api.deleteMeasurement(editingEntry.id);
-        await loadData();
-        setEditingEntry(null);
-        setView('dashboard');
-    } catch(e) {
-        setError("Fehler beim Löschen");
-        setLoading(false);
+      setLoading(true);
+      await api.deleteMeasurement(editingEntry.id);
+      await loadData();
+      setEditingEntry(null);
+      setView('dashboard');
+    } catch (e) {
+      setError("Fehler beim Löschen");
+      setLoading(false);
     }
   };
 
@@ -100,7 +100,7 @@ function App() {
 
   if (!user) {
     return <AuthForms onSuccess={() => {
-        api.checkAuth().then(u => { setUser(u); loadData(); });
+      api.checkAuth().then(u => { setUser(u); loadData(); });
     }} />;
   }
 
@@ -116,7 +116,7 @@ function App() {
       <header className="sticky top-0 z-10 bg-zinc-950/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-xl mx-auto px-6 h-16 flex items-center justify-between">
           <h1 className="text-lg font-bold bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent tracking-tight">
-            Körper-Tracker Pro
+            Soma
           </h1>
           <button onClick={handleLogout} className="p-2 text-zinc-400 hover:text-white transition-colors" title="Abmelden">
             <LogOut size={20} />
@@ -126,35 +126,35 @@ function App() {
 
       <main className="max-w-xl mx-auto px-4 sm:px-6 py-6 space-y-8 relative z-0">
         {error && (
-            <div className="bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-200 p-4 rounded-2xl text-sm">
-                {error}
-            </div>
+          <div className="bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-200 p-4 rounded-2xl text-sm">
+            {error}
+          </div>
         )}
 
         {view === 'form' ? (
-          <EntryForm 
+          <EntryForm
             key={editingEntry ? editingEntry.id : 'new'}
             initialData={editingEntry || undefined}
-            onSubmit={handleSave} 
+            onSubmit={handleSave}
             onCancel={handleCancel}
             onDelete={editingEntry ? handleDelete : undefined}
           />
         ) : (
           <>
             {loading && entries.length === 0 ? (
-                <div className="text-center py-10 text-zinc-500">Lade Daten...</div>
+              <div className="text-center py-10 text-zinc-500">Lade Daten...</div>
             ) : (
-                <>
-                    <SummaryStats entries={entries} />
+              <>
+                <SummaryStats entries={entries} />
 
-                    <section>
-                    <ProgressChart data={entries} />
-                    </section>
+                <section>
+                  <ProgressChart data={entries} />
+                </section>
 
-                    <section>
-                    <HistoryList entries={entries} onEdit={handleEditClick} />
-                    </section>
-                </>
+                <section>
+                  <HistoryList entries={entries} onEdit={handleEditClick} />
+                </section>
+              </>
             )}
           </>
         )}
@@ -167,8 +167,8 @@ function App() {
             onClick={() => { setEditingEntry(null); setView('form'); }}
             className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-[0_8px_30px_rgb(59,130,246,0.3)] hover:shadow-[0_8px_40px_rgb(59,130,246,0.5)] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/20"
           >
-             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-             <Plus size={28} />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <Plus size={28} />
           </button>
         </div>
       )}

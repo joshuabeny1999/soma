@@ -1,14 +1,21 @@
-version: '3.8'
-
+version: "3"
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./data:/app/data
+  app_soma:
+    container_name: website_joshua_app_soma_joshuah_ch
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
+    env_file: .env
     environment:
-      - PORT=8080
-      # Change this in production!
-      - JWT_SECRET=change-me-to-something-secure
+      - VIRTUAL_HOST=soma.joshuah.ch
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=soma.joshuah.ch
+      - LETSENCRYPT_EMAIL=joshua@joshuah.ch
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+networks:
+  default:
+    external: true
+    name: nginx-proxy
