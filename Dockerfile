@@ -21,6 +21,7 @@ RUN go mod download
 
 # Kopiere den Go Source Code
 COPY main.go .
+COPY internal ./internal
 
 # Kopiere den Frontend Build in den backend/frontend/dist Ordner (wie im Go Code erwartet)
 # Wir erstellen die Struktur ./frontend/dist im Container

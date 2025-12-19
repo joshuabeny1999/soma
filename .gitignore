@@ -1,3 +1,8 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 # Logs
 logs
 *.log
@@ -11,6 +16,10 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Go
+data/
+*.db
 
 # Editor directories and files
 .vscode/*

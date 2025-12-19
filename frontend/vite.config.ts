@@ -4,25 +4,29 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
+
+  // Get API URL from environment or use default
+  const apiUrl = env.VITE_API_URL || 'http://localhost:8080';
+
   return {
     server: {
       port: 3000,
       host: '0.0.0.0',
       proxy: {
         '/api': {
-          target: 'http://localhost:8080', // Go Server lokal
+          target: apiUrl,
           changeOrigin: true,
         }
       }
     },
     build: {
-      outDir: 'dist', // Wichtig für den Go Server
+      outDir: 'dist',
       emptyOutDir: true,
     },
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'), // Falls du src nutzt
+        '@': path.resolve(__dirname, './src'),
       }
     }
   };
