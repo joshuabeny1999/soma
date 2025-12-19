@@ -1,0 +1,5 @@
+{
+  "name": "Körper-Tracker Pro",
+  "description": "Eine moderne App zur Verfolgung von Körpermaßen (Gewicht, Bauch, Brust, Arme, Beine) mit SQLite-Integration, Fortschrittsdiagrammen und visuellen Indikatoren für Veränderungen.",
+  "requestFramePermissions": []
+}
