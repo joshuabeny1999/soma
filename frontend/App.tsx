@@ -114,7 +114,7 @@ function App() {
 
       {/* Header */}
       <header className="sticky top-0 z-10 bg-zinc-950/70 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <h1 className="text-lg font-bold bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent tracking-tight">
             Soma
           </h1>
@@ -169,14 +169,16 @@ function App() {
 
       {/* Floating Action Button (FAB) */}
       {view === 'dashboard' && (
-        <div className="fixed bottom-6 right-6 z-50">
-          <button
-            onClick={() => { setEditingEntry(null); setView('form'); }}
-            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-[0_8px_30px_rgb(59,130,246,0.3)] hover:shadow-[0_8px_40px_rgb(59,130,246,0.5)] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/20"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <Plus size={28} />
-          </button>
+        <div className="fixed inset-x-0 bottom-6 z-50 pointer-events-none">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-end">
+            <button
+              onClick={() => { setEditingEntry(null); setView('form'); }}
+              className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-[0_8px_30px_rgb(59,130,246,0.3)] hover:shadow-[0_8px_40px_rgb(59,130,246,0.5)] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/20 pointer-events-auto"
+            >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <Plus size={28} />
+            </button>
+          </div>
         </div>
       )}
     </div>
