@@ -124,37 +124,44 @@ function App() {
         </div>
       </header>
 
-      <main className="max-w-xl mx-auto px-4 sm:px-6 py-6 space-y-8 relative z-0">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 relative z-0">
         {error && (
-          <div className="bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-200 p-4 rounded-2xl text-sm">
+          <div className="bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-200 p-4 rounded-2xl text-sm max-w-xl mx-auto">
             {error}
           </div>
         )}
 
         {view === 'form' ? (
-          <EntryForm
-            key={editingEntry ? editingEntry.id : 'new'}
-            initialData={editingEntry || undefined}
-            onSubmit={handleSave}
-            onCancel={handleCancel}
-            onDelete={editingEntry ? handleDelete : undefined}
-          />
+          <div className="max-w-xl mx-auto">
+            <EntryForm
+              key={editingEntry ? editingEntry.id : 'new'}
+              initialData={editingEntry || undefined}
+              onSubmit={handleSave}
+              onCancel={handleCancel}
+              onDelete={editingEntry ? handleDelete : undefined}
+            />
+          </div>
         ) : (
           <>
             {loading && entries.length === 0 ? (
               <div className="text-center py-10 text-zinc-500">Lade Daten...</div>
             ) : (
-              <>
-                <SummaryStats entries={entries} />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                {/* Left Column: Stats and Chart */}
+                <div className="space-y-6 lg:space-y-8">
+                  <SummaryStats entries={entries} />
+                  <section>
+                    <ProgressChart data={entries} />
+                  </section>
+                </div>
 
-                <section>
-                  <ProgressChart data={entries} />
-                </section>
-
-                <section>
-                  <HistoryList entries={entries} onEdit={handleEditClick} />
-                </section>
-              </>
+                {/* Right Column: History */}
+                <div>
+                  <section>
+                    <HistoryList entries={entries} onEdit={handleEditClick} />
+                  </section>
+                </div>
+              </div>
             )}
           </>
         )}
