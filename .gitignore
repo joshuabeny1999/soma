@@ -18,6 +18,7 @@ dist-ssr
 *.local
 
 # Go
+soma-data/
 data/
 *.db
 

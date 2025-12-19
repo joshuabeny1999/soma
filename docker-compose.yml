@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app_soma:
+    container_name: website_joshua_app_soma_joshuah_ch
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - VIRTUAL_HOST=soma.joshuah.ch
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=soma.joshuah.ch
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    volumes:
+      # Hier mappen wir den Ordner ./soma-data auf dem Server
+      # auf den Ordner /app/data im Container
+      - ./soma-data:/app/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+
+networks:
+  default:
+    external: true
+    name: nginx-proxy
